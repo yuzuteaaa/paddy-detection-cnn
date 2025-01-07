@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Classifier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Plant Disease Classifier</h1>
+        <p class="text-center">Upload an image of a plant leaf to classify its disease.</p>
+
+        <form method="POST" enctype="multipart/form-data" class="text-center">
+            <div class="mb-3">
+                <input type="file" name="file" class="form-control" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload and Classify</button>
+        </form>
+
+        {% if uploaded_image %}
+        <div class="mt-4 text-center">
+            <h3>Uploaded Image:</h3>
+            <img src="{{ uploaded_image }}" alt="Uploaded Leaf Image" class="img-fluid rounded" style="max-width: 300px;">
+
+            <h3 class="mt-4">Prediction:</h3>
+            <p class="fw-bold">{{ prediction }}</p>
+
+            <h4>Confidence:</h4>
+            <p>{{ confidence }}%</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

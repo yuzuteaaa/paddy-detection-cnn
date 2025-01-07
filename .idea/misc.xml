@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Black">
+    <option name="sdkName" value="Python 3.12 (paddy-detection-CNN)" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 virtualenv at ~/Program/Kuliah/cape-stone/detection-paddy/.venv" project-jdk-type="Python SDK" />
+</project>
