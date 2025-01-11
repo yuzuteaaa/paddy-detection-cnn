@@ -12,13 +12,21 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-model_path = "model/final_model.h5"
+model_path = "model/detection/five-class.keras"
 model = load_model(model_path)
 
-Categories = ['layu', 'normal', 'tungro', 'wereng']
+Categories = ['layu','non-leaf', 'normal', 'tungro', 'wereng']
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_to_category_folder(file_path, predicted_label):
+    category_folder = os.path.join(app.config['UPLOAD_FOLDER'], predicted_label)
+    if not os.path.exists(category_folder):
+        os.makedirs(category_folder)
+    new_file_path = os.path.join(category_folder, os.path.basename(file_path))
+    os.rename(file_path, new_file_path)
+    return new_file_path
 
 
 def process_image(img_path):
@@ -33,7 +41,10 @@ def process_image(img_path):
     confidence = float(np.max(predictions[0]) * 100)
 
     predicted_label = Categories[predicted_class]
-    return predicted_label, confidence
+
+    categorized_file_path = save_to_category_folder(img_path, predicted_label)
+
+    return predicted_label, confidence, categorized_file_path
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -48,10 +59,10 @@ def index():
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            predicted_class, confidence = process_image(file_path)
+            predicted_class, confidence, categorized_file_path = process_image(file_path)
             return render_template(
                 'index.html',
-                uploaded_image=file_path,
+                uploaded_image=categorized_file_path,
                 prediction=predicted_class,
                 confidence=confidence
             )

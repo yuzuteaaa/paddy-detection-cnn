@@ -1,1 +1,11 @@
 /model/final_model.h5
+/model/chatbot/config.json
+/model/detection/final_model.h5
+/model/detection/five-class.keras
+/model/chatbot/generation_config.json
+/model/chatbot/gitattributes
+/model/chatbot/model.safetensors
+/model/chatbot/README.md
+/model/chatbot/special_tokens_map.json
+/model/chatbot/tokenizer.json
+/model/chatbot/tokenizer_config.json
