@@ -5,6 +5,8 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
+from controllers import chatController
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'static/uploads/'
@@ -85,6 +87,11 @@ def predict():
             'confidence': float(confidence)
         })
     return jsonify({'error': 'Invalid file'}), 400
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    if request.method == "POST":
+        return chatController.chat()
 
 if __name__ == '__main__':
     app.run(debug=True)
